@@ -1,0 +1,14 @@
+controlling the center
+
+developing pieces
+
+castling
+
+piece activity
+
+pawn structure
+
+king safety
+
+minimax (i guess? now bot accept free piece)
+alpha beta

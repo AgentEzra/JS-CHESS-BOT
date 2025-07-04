@@ -12,7 +12,6 @@ document.getElementById('resetButton').onclick = () => {
     board.position(game.fen());
 }
 
-
 function onDragStart(source, piece, position, orientation) {
   // do not pick up pieces if the game is over
   if (game.game_over()) return false;
@@ -34,7 +33,7 @@ function onDrop(source, target) {
 
   // make random legal move for black
   moveSound.play();
-  window.setTimeout(makeRandomMove, 250);
+  window.setTimeout(makeBestMove, 250);
 }
 
 // update the board position after the piece snap
