@@ -1,0 +1,122 @@
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #333;
+}
+
+/* Chess Board Container */
+#myBoard {
+    width: 400px;
+    max-width: 100%;
+    margin: 20px auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Analytics Panel */
+#analytics {
+    margin: 20px auto;
+    padding: 20px;
+    width: 400px;
+    max-width: 100%;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Courier New', monospace;
+    border-left: 4px solid #4a6fa5;
+}
+
+#analytics div {
+    margin: 10px 0;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+}
+
+#analytics div:last-child {
+    border-bottom: none;
+}
+
+#analytics span {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* Reset Button */
+#resetButton {
+    background: linear-gradient(to right, #4a6fa5, #166088);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+#resetButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(to right, #166088, #4a6fa5);
+}
+
+#resetButton:active {
+    transform: translateY(0);
+}
+
+/* Evaluation Highlight */
+.highlight {
+    background-color: rgba(46, 204, 113, 0.3);
+    transition: background-color 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 500px) {
+    #myBoard, #analytics {
+        width: 90%;
+    }
+    
+    #analytics div {
+        flex-direction: column;
+    }
+    
+    #analytics span {
+        margin-top: 4px;
+    }
+}
+
+/* Animation for analytics updates */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.updated {
+    animation: pulse 0.5s ease;
+}
+
+/* Loading indicator for bot thinking */
+.thinking::after {
+    content: "...";
+    animation: dots 1.5s steps(5, end) infinite;
+}
+
+@keyframes dots {
+    0%, 20% { content: "."; }
+    40% { content: ".."; }
+    60%, 100% { content: "..."; }
+}

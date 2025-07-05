@@ -35,7 +35,7 @@ function onDrop(source, target) {
 
   // make random legal move for black
   moveSound.play();
-  window.setTimeout(makeBestMove, 250);
+  window.setTimeout(makeRandomMove, 250);
 }
 
 // update the board position after the piece snap

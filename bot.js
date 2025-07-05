@@ -83,6 +83,7 @@ function mini(depth, alpha, beta) {
 }
 
 function makeRandomMove() {
+  const start = performance.now();
   var possibleMoves = game.moves();
   moveSound.play();
   
@@ -96,5 +97,7 @@ function makeRandomMove() {
   if (possibleMoves.length === 0) {
     return;
   }
+  const end = performance.now();
+  msTime.innerText = `⏱️ ${(end - start).toFixed(2)}ms`;
   return score;
 }
