@@ -46,7 +46,6 @@ function makeBestMove(maxDepth = 3)  // Higher = smarter but slower
 Browser JavaScript isn't optimized for:  
 - Deep recursive searches (minimax)  
 - Heavy board evaluation  
-- Multi-threading  
-```
-
+- Multi-threading
+- 
 ---
