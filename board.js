@@ -6,6 +6,8 @@ var game = new Chess();
 var whiteSquareGrey = "#a9a9a9";
 var blackSquareGrey = "#696969";
 
+const msTime = document.getElementById("thinkingTime");
+
 //reset button
 document.getElementById('resetButton').onclick = () => {
     game.reset();

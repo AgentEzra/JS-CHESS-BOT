@@ -1,19 +1,35 @@
-function makeBestMove(depth = 2) {
+function makeBestMove(maxDepth = 3, timeLimit = 20000) {
+  const start = performance.now();
   const possibleMoves = game.moves({ verbose: true });
   if (possibleMoves.length === 0) return;
 
-  let bestMove = null;
+  let bestMove = possibleMoves[0]; // default to first move
   let bestScore = -Infinity;
 
-  for (let move of possibleMoves) {
-    game.move(move);
-    const score = mini(depth - 1);
-    game.undo();
+  // Iterative deepening
+  for (let depth = 1; depth <= maxDepth; depth++) {
+    let alpha = -Infinity;
+    let beta = Infinity;
+    let currentBestMove = bestMove; // reuse previous best move for move ordering
 
-    if (score > bestScore) {
-      bestScore = score;
-      bestMove = move;
+    for (let move of possibleMoves) {
+      game.move(move);
+      const score = mini(depth - 1, alpha, beta);
+      game.undo();
+
+      if (score > bestScore) {
+        bestScore = score;
+        bestMove = move;
+      }
+      alpha = Math.max(alpha, bestScore);
+
+      // Time check
+      if (performance.now() - start > timeLimit) {
+        break; // stop searching if out of time
+      }
     }
+
+    if (performance.now() - start > timeLimit) break;
   }
 
   if (bestMove) {
@@ -21,10 +37,13 @@ function makeBestMove(depth = 2) {
     board.position(game.fen());
     moveSound.play();
     EvalBar();
+    const end = performance.now();
+    msTime.innerText = `⏱️ ${(end - start).toFixed(2)}ms`;
   }
 }
 
-function maxi(depth) {
+// Maximizing player (White)
+function maxi(depth, alpha, beta) {
   if (depth === 0 || game.game_over()) return evaluateBoard(game);
 
   let maxEval = -Infinity;
@@ -32,33 +51,32 @@ function maxi(depth) {
 
   for (let move of moves) {
     game.move(move);
-    const evalScore = mini(depth - 1);
+    const evalScore = mini(depth - 1, alpha, beta);
     game.undo();
-    if (evalScore > maxEval) maxEval = evalScore;
 
-    const score = evaluateBoard(game);
-    console.log("mini (depth 0):", score);
-    return score;
+    maxEval = Math.max(maxEval, evalScore);
+    alpha = Math.max(alpha, evalScore); // Update alpha
+    if (beta <= alpha) break; // Beta cutoff
   }
 
   return maxEval;
 }
 
-function mini(depth) {
-  if (depth === 0 || game.game_over()) return -evaluateBoard(game);
+// Minimizing player (Black)
+function mini(depth, alpha, beta) {
+  if (depth === 0 || game.game_over()) return evaluateBoard(game);
 
   let minEval = Infinity;
   const moves = game.moves({ verbose: true });
 
   for (let move of moves) {
     game.move(move);
-    const evalScore = maxi(depth - 1);
+    const evalScore = maxi(depth - 1, alpha, beta);
     game.undo();
-    if (evalScore < minEval) minEval = evalScore;
 
-    const score = -evaluateBoard(game);
-    console.log("mini (depth 0):", score);
-    return score;
+    minEval = Math.min(minEval, evalScore);
+    beta = Math.min(beta, evalScore); // Update beta
+    if (beta <= alpha) break; // Alpha cutoff
   }
 
   return minEval;
@@ -67,6 +85,7 @@ function mini(depth) {
 function makeRandomMove() {
   var possibleMoves = game.moves();
   moveSound.play();
+  
 
   var randomIdx = Math.floor(Math.random() * possibleMoves.length);
   game.move(possibleMoves[randomIdx]);
@@ -77,4 +96,5 @@ function makeRandomMove() {
   if (possibleMoves.length === 0) {
     return;
   }
+  return score;
 }
