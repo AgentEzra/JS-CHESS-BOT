@@ -1,4 +1,3 @@
-```
 # JS-CHESS-BOT  
 *A browser-based chess AI using chess.js + chessboard.js*  
 ⚠️ **Archived**: Not maintained due to browser performance issues.  
