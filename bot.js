@@ -1,4 +1,4 @@
-function makeBestMove(maxDepth = 3, timeLimit = 20000) {
+function makeBestMove(maxDepth = 2, timeLimit = 20000) {
   const start = performance.now();
   const possibleMoves = game.moves({ verbose: true });
   if (possibleMoves.length === 0) return;
